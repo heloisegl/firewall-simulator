@@ -1,9 +1,9 @@
 # app/parser/packets_parser.py
 
 import json
-from models.packet import Packet
-from models.enums import Protocol
-from parser.validators import validate_ip, validate_port, validate_protocol
+from app.models.packet import Packet
+from app.models.enums import Protocol
+from app.parser.validators import validate_ip, validate_port, validate_protocol
 
 
 def load_packets(file_path: str) -> list[Packet]:

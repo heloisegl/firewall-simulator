@@ -1,8 +1,8 @@
 import json
 
-from models.rule import Rule
-from models.enums import Action
-from parser.validators import (
+from app.models.rule import Rule
+from app.models.enums import Action
+from app.parser.validators import (
     validate_ip,
     validate_port,
     validate_protocol,
