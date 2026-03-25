@@ -1,5 +1,10 @@
+# app/engine/matcher.py
+# Implements the RuleMatcher class, which contains methods to determine if a given
+# network packet matches a firewall rule based on IP addresses, port, and protocol.
+
 from models.packet import Packet
 from models.rule import Rule
+
 
 class RuleMatcher:
     @staticmethod
@@ -19,6 +24,6 @@ class RuleMatcher:
         return (
             cls.match_ip(packet.source_ip, rule.source_ip)
             and cls.match_ip(packet.destination_ip, rule.destination_ip)
-            and cls.match_port(packet.destination_port, rule.port)
+            and cls.match_port(packet.destination_port, rule.port)  # atualizado
             and cls.match_protocol(packet.protocol.value, rule.protocol)
         )
