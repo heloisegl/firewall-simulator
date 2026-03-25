@@ -1,0 +1,23 @@
+[
+  {
+    "action": "BLOCK",
+    "source_ip": "any",
+    "destination_ip": "any",
+    "port": 23,
+    "protocol": "TCP"
+  },
+  {
+    "action": "ALLOW",
+    "source_ip": "any",
+    "destination_ip": "any",
+    "port": 80,
+    "protocol": "TCP"
+  },
+  {
+    "action": "ALLOW",
+    "source_ip": "any",
+    "destination_ip": "any",
+    "port": 53,
+    "protocol": "UDP"
+  }
+]

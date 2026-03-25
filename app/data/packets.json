@@ -1,0 +1,8 @@
+[
+  {"source_ip": "10.0.0.10", "destination_ip": "192.168.0.1", "source_port": 54321, "destination_port": 80,  "protocol": "TCP"},
+  {"source_ip": "10.0.0.11", "destination_ip": "192.168.0.1", "source_port": 54322, "destination_port": 23,  "protocol": "TCP"},
+  {"source_ip": "10.0.0.12", "destination_ip": "8.8.8.8",     "source_port": 54323, "destination_port": 53,  "protocol": "UDP"},
+  {"source_ip": "10.0.0.13", "destination_ip": "192.168.0.1", "source_port": 54324, "destination_port": 22,  "protocol": "TCP"},
+  {"source_ip": "10.0.0.10", "destination_ip": "192.168.0.1", "source_port": 54321, "destination_port": 80,  "protocol": "TCP"},
+  {"source_ip": "10.0.0.10", "destination_ip": "192.168.0.1", "source_port": 54321, "destination_port": 80,  "protocol": "TCP"}
+]
