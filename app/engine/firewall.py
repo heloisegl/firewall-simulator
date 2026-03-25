@@ -4,11 +4,12 @@
 # Only on a cache miss does it fall back to sequential rule matching.
 # Authorized connections are registered in the StateTable for fast future lookups.
 
-from models.packet import Packet
-from models.rule import Rule
-from models.enums import Action
-from engine.matcher import RuleMatcher
-from engine.state_table import StateTable
+from app.engine.matcher import RuleMatcher
+from app.engine.state_table import StateTable
+from app.models.decision import Decision
+from app.models.enums import Action
+from app.models.packet import Packet
+from app.models.rule import Rule
 
 
 class Firewall:
@@ -24,8 +25,8 @@ class Firewall:
         self.stateful = stateful
         self.state_table = StateTable(connection_timeout=connection_timeout)
 
-    def process_packet(self, packet: Packet) -> Action:
-        # --- FAST PATH: consulta a tabela de estados ---
+    def process_packet(self, packet: Packet) -> Decision:
+        # Fast path: allow packets from an already known active connection.
         if self.stateful:
             existing = self.state_table.lookup(
                 source_ip=packet.source_ip,
@@ -35,16 +36,18 @@ class Firewall:
                 protocol=packet.protocol,
             )
             if existing is not None:
-                # Conexão já conhecida e autorizada: libera sem re-avaliar regras
                 existing.refresh()
-                return Action.ALLOW
+                return Decision(
+                    packet=packet,
+                    action=Action.ALLOW,
+                    decision_source="fast_path",
+                )
 
-        # --- SLOW PATH: matching sequencial de regras ---
+        # Slow path: evaluate rules sequentially until the first match.
         for rule in self.rules:
             if RuleMatcher.matches(packet, rule):
                 action = rule.action
 
-                # Se foi ALLOW e stateful está ativo, registra a conexão
                 if self.stateful and action == Action.ALLOW:
                     self.state_table.register(
                         source_ip=packet.source_ip,
@@ -54,6 +57,15 @@ class Firewall:
                         protocol=packet.protocol,
                     )
 
-                return action
+                return Decision(
+                    packet=packet,
+                    action=action,
+                    decision_source="slow_path",
+                    matched_rule=rule,
+                )
 
-        return self.default_action
+        return Decision(
+            packet=packet,
+            action=self.default_action,
+            decision_source="slow_path",
+        )

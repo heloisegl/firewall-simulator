@@ -2,8 +2,8 @@
 # Implements the RuleMatcher class, which contains methods to determine if a given
 # network packet matches a firewall rule based on IP addresses, port, and protocol.
 
-from models.packet import Packet
-from models.rule import Rule
+from app.models.packet import Packet
+from app.models.rule import Rule
 
 
 class RuleMatcher:

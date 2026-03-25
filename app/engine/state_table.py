@@ -3,8 +3,8 @@
 # that stores active connections using the 5-tuple as a unique key,
 # enabling fast O(1) lookup for established connections.
 
-from models.connection import ConnectionKey, ConnectionState
-from models.enums import Protocol
+from app.models.connection import ConnectionKey, ConnectionState
+from app.models.enums import Protocol
 
 
 class StateTable:
